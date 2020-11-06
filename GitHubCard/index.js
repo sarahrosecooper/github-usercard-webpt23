@@ -5,9 +5,18 @@ import axios from "axios";
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-axios.get("https://api.github.com/users/sarahrosecooper").then((response) => {
-  console.log(response.data);
-});
+const attachFunction = document.querySelector(".cards");
+const getData = axios.get("https://api.github.com/users/sarahrosecooper");
+
+getData
+  .then((response) => {
+    console.log(response.data);
+    const gitHubData = card(response.data);
+    attachFunction.appendChild(gitHubData);
+  })
+  .catch((error) => {
+    console.log("Error", error);
+  });
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -89,14 +98,12 @@ const card = (gitInfo) => {
 
   // children
 
-  card.append(userImg, cardInfo);
+  cardDiv.append(userImg, cardInfo);
   cardInfo.append(name, userName, location, profile, followers, following, bio);
   profile.appendChild(address);
 
   return cardDiv;
 };
-
-card();
 
 /*
   List of LS Instructors Github username's:
