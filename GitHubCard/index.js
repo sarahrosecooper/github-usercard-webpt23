@@ -41,7 +41,22 @@ getData
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  "ajablanco",
+  "ChadDiaz",
+  "ORiveraJr84",
+  "sarahmarie1976",
+  "cameronyoung94",
+  "valid-huseynli",
+  "Liliana-Leyva",
+];
+
+followersArray.forEach((user) => {
+  axios.get(`https://api.github.com/users/${user}`).then((response) => {
+    let usersInfo = response.data;
+    attachFunction.appendChild(card(usersInfo));
+  });
+});
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -89,7 +104,9 @@ const card = (gitInfo) => {
   userImg.src = gitInfo.avatar_url;
   name.textContent = gitInfo.name;
   userName.textContent = gitInfo.login;
-  location.textContent = `Location: ${gitInfo.location}`;
+  gitInfo.location != null
+    ? (location.textContent = `Location: ${gitInfo.location}`)
+    : (location.textContent = `Location: a mystery`);
   profile.textContent = "Profile: ";
   address.textContent = gitInfo.html_url;
   followers.textContent = `Followers: ${gitInfo.followers}`;
